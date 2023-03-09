@@ -1,0 +1,7 @@
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+[user]
+	email = josnocpp@gmail.com
+	name = JosnocSackra
