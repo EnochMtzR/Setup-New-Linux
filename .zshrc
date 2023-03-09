@@ -75,6 +75,7 @@ plugins=(zsh-syntax-highlighting)
 plugins=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # User configuration
 
