@@ -9,7 +9,7 @@ else
 fi
 
 #=============== PACKAGE INSTALLATION ================
-packages=("zsh" "terminator" "unzip" "code" "neofetch")
+packages=("zsh" "terminator" "unzip" "code" "neofetch" "xclip")
 
 for package in "${packages[@]}"
 do
@@ -86,3 +86,19 @@ cp -r terminator ~/.config/
 
 #============== RESTORING GIT CONFIGURATIONS ======================
 cp .gitconfig ~/
+
+#============== CREATING A NEW PERSONAL SSH KEY FOR GITHUB ===================
+if ! [ -d ~/.ssh ]; then
+	mkdir ~/.ssh
+fi
+
+if ! [ -e ~/.ssh/github ]; then
+	ssh-keygen -t ed25519 -C "josnocpp@gmail.com" -f ~/.ssh/github
+	if eval "$(ssh-agent -s)" >/dev/null; then
+		ssh-add ~/.ssh/github
+	fi
+fi
+
+cat ~/.ssh/github.pub | xclip -selection clipboard
+
+exec xdg-open "https://github.com/settings/keys"
