@@ -10,7 +10,8 @@ To recover the desired environment just git clone the repository add executable 
 ```bash
 git clone https://github.com/EnochMtzR/Setup-New-Linux.git ~/.setup
 chmod +x ~/.setup/run.sh
-~/.setup/run.sh
+cd ~/.setup
+./run.sh
 ```
 
 ## Cleanup
