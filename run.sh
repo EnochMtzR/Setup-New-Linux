@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#=============== INSTALLING CHROME ===================
+if ! [ -e google-chrome-stable_current_amd64.deb ]; then
+	curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+	sudo apt install ./google-chrome-stable_current_amd64.deb
+fi
+
 #=============== INSTALLING NEOVIM ===================
 if ! [ -e nvim-linux64.deb ]; then
 	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
@@ -87,6 +93,13 @@ cp -r terminator ~/.config/
 #============== RESTORING GIT CONFIGURATIONS ======================
 cp .gitconfig ~/
 
+#==================== INSTALLING IDEs =============================
+if ! [ -e jetbrains-toolbox-1.27.3.14493.tar.gz ]; then
+	curl -LO https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-1.27.3.14493.tar.gz
+	tar -xzvf jetbrains-toolbox-1.27.3.14493.tar.gz
+	./jetbrains-toolbox-1.27.3.14493/jetbrains-toolbox
+fi
+
 #============== CREATING A NEW PERSONAL SSH KEY FOR GITHUB ===================
 if ! [ -d ~/.ssh ]; then
 	mkdir ~/.ssh
@@ -99,6 +112,11 @@ if ! [ -e ~/.ssh/github ]; then
 	fi
 fi
 
-cat ~/.ssh/github.pub | xclip -selection clipboard
+echo "Do you want to add your ssh key to github? [y/N]"
+read openGithub
 
-exec xdg-open "https://github.com/settings/keys"
+if [ "$openGithub" = "y" ]; then
+	cat ~/.ssh/github.pub | xclip -selection clipboard
+
+	exec xdg-open "https://github.com/settings/keys"
+fi
