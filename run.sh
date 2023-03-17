@@ -118,15 +118,15 @@ if ! [ -e ~/.ssh/github ]; then
 	if eval "$(ssh-agent -s)" >/dev/null; then
 		ssh-add ~/.ssh/github
 	fi
-fi
 
-echo "Do you want to add your ssh key to github? [y/N]"
-read openGithub
+	echo "Do you want to add your ssh key to github? [y/N]"
+	read openGithub
 
-if [ "$openGithub" = "y" ]; then
-	cat ~/.ssh/github.pub | xclip -selection clipboard
+	if [ "$openGithub" = "y" ]; then
+		cat ~/.ssh/github.pub | xclip -selection clipboard
 
-	exec xdg-open "https://github.com/settings/keys"
+		exec xdg-open "https://github.com/settings/keys"
+	fi
 fi
 
 #=============== CREATING A NEW PERSONAL SSH KEY FOR AZURE ======================
@@ -136,13 +136,13 @@ if ! [ -e ~/.ssh/azure ]; then
 	if eval "$(ssh-agent -s)" >/dev/null; then
 		ssh-add ~/.ssh/azure
 	fi
-fi
 
-echo "Do you want to add your ssh key to azure? [y/N]"
-read openAzure
+	echo "Do you want to add your ssh key to azure? [y/N]"
+	read openAzure
 
-if [ "$openAzure" = "y" ]; then
-	cat ~/.ssh/azure.pub | xclip -selection clipboard
+	if [ "$openAzure" = "y" ]; then
+		cat ~/.ssh/azure.pub | xclip -selection clipboard
 
-	exec xdg-open "https://dev.azure.com/soft-inc/_usersSettings/keys"
+		exec xdg-open "https://dev.azure.com/soft-inc/_usersSettings/keys"
+	fi
 fi
