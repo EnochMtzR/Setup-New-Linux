@@ -97,13 +97,19 @@ cp -r terminator ~/.config/
 cp .gitconfig ~/
 
 #==================== INSTALLING IDEs =============================
-echo "Installing IDEs...\n"
+echo "Installing IDEs..."
 if ! [ -e jetbrains-toolbox-1.27.3.14493.tar.gz ]; then
 	curl -LO https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-1.27.3.14493.tar.gz
 	tar -xzvf jetbrains-toolbox-1.27.3.14493.tar.gz
 	./jetbrains-toolbox-1.27.3.14493/jetbrains-toolbox
 else
 	echo "Jetbrains Toolbox is already installed!\n\tNothing to do.\n"
+fi
+
+#========================== INSTALLING NVM ===============================
+echo "Installing Nvm..."
+if ! command -v nvm >/dev/null 2>&1; then
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash 
 fi
 
 #============== CREATING A NEW PERSONAL SSH KEY FOR GITHUB ===================
