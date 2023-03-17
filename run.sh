@@ -1,12 +1,14 @@
 #!/bin/bash
 
 #=============== INSTALLING CHROME ===================
+echo -e "Installing Chrome...\n"
 if ! [ -e google-chrome-stable_current_amd64.deb ]; then
 	curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo apt install ./google-chrome-stable_current_amd64.deb
 fi
 
 #=============== INSTALLING NEOVIM ===================
+echo -e "Installing neovim..."
 if ! [ -e nvim-linux64.deb ]; then
 	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
 	sudo apt install ./nvim-linux64.deb
@@ -78,6 +80,7 @@ else
 fi
 
 #============== RESTORING ZSH AND PROMPT CONFIGURATIONS =======================
+echo -e "Restoring configurations...\n"
 cp .zshrc ~/
 cp .spaceshiprc.zsh ~/
 
@@ -94,18 +97,23 @@ cp -r terminator ~/.config/
 cp .gitconfig ~/
 
 #==================== INSTALLING IDEs =============================
+echo "Installing IDEs...\n"
 if ! [ -e jetbrains-toolbox-1.27.3.14493.tar.gz ]; then
 	curl -LO https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-1.27.3.14493.tar.gz
 	tar -xzvf jetbrains-toolbox-1.27.3.14493.tar.gz
 	./jetbrains-toolbox-1.27.3.14493/jetbrains-toolbox
+else
+	echo "Jetbrains Toolbox is already installed!\n\tNothing to do.\n"
 fi
 
 #============== CREATING A NEW PERSONAL SSH KEY FOR GITHUB ===================
 if ! [ -d ~/.ssh ]; then
+	echo -e "Creating ssh folder...\n"
 	mkdir ~/.ssh
 fi
 
 if ! [ -e ~/.ssh/github ]; then
+	echo "Creating ssh personal key for github..."
 	ssh-keygen -t ed25519 -C "josnocpp@gmail.com" -f ~/.ssh/github
 	if eval "$(ssh-agent -s)" >/dev/null; then
 		ssh-add ~/.ssh/github
@@ -119,4 +127,22 @@ if [ "$openGithub" = "y" ]; then
 	cat ~/.ssh/github.pub | xclip -selection clipboard
 
 	exec xdg-open "https://github.com/settings/keys"
+fi
+
+#=============== CREATING A NEW PERSONAL SSH KEY FOR AZURE ======================
+if ! [ -e ~/.ssh/azure ]; then
+	echo "Creating ssh personal key for azure..."
+	ssh-keygen -t rsa -b 4096 -C "emartinez.softinc@outlook.com" -f ~/.ssh/azure
+	if eval "$(ssh-agent -s)" >/dev/null; then
+		ssh-add ~/.ssh/azure
+	fi
+fi
+
+echo "Do you want to add your ssh key to azure? [y/N]"
+read openAzure
+
+if [ "$openAzure" = "y" ]; then
+	cat ~/.ssh/azure.pub | xclip -selection clipboard
+
+	exec xdg-open "https://dev.azure.com/soft-inc/_usersSettings/keys"
 fi
